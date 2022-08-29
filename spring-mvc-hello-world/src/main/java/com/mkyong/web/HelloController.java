@@ -13,8 +13,12 @@ public class HelloController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String welcome(ModelMap model) {
+
         model.addAttribute("message", "Spring MVC Hello World");
+
+        // view name, map to welcome.html later
         return "welcome";
+
     }
 
     /*@RequestMapping(value = "/hello/{name:.+}", method = RequestMethod.GET)
@@ -33,7 +37,7 @@ public class HelloController {
 
         model.addAttribute("message", name);
 
-        // view name
+        // view name, map to welcome.html later
         return "welcome";
     }
 

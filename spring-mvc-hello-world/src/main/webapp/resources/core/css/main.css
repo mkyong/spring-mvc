@@ -13,3 +13,7 @@ h1{
 h2{
 	color:#FF0000;
 }
+
+.navbar-brand{
+    margin:0 2rem;
+}

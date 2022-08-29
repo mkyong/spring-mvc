@@ -18,6 +18,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 @ComponentScan({"com.mkyong.web"})
 public class SpringWebConfig implements WebMvcConfigurer {
 
+    // Spring + Thymeleaf need this
     @Autowired
     private ApplicationContext applicationContext;
 
@@ -28,6 +29,8 @@ public class SpringWebConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/webjars/**").addResourceLocations("/webjars/");
     }
 
+    // https://www.thymeleaf.org/doc/tutorials/3.0/thymeleafspring.html
+    // Spring + Thymeleaf
     @Bean
     public SpringResourceTemplateResolver templateResolver() {
         // SpringResourceTemplateResolver automatically integrates with Spring's own
@@ -44,6 +47,7 @@ public class SpringWebConfig implements WebMvcConfigurer {
         return templateResolver;
     }
 
+    // Spring + Thymeleaf
     @Bean
     public SpringTemplateEngine templateEngine() {
         // SpringTemplateEngine automatically applies SpringStandardDialect and
@@ -59,6 +63,7 @@ public class SpringWebConfig implements WebMvcConfigurer {
         return templateEngine;
     }
 
+    // Spring + Thymeleaf
     // Configure Thymeleaf View Resolver
     @Bean
     public ThymeleafViewResolver viewResolver() {
