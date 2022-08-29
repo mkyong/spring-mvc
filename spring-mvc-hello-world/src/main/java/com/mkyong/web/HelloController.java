@@ -1,0 +1,41 @@
+package com.mkyong.web;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+@Controller
+public class HelloController {
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String welcome(ModelMap model) {
+        model.addAttribute("message", "Spring MVC Hello World");
+        return "welcome";
+    }
+
+    /*@RequestMapping(value = "/hello/{name:.+}", method = RequestMethod.GET)
+    public ModelAndView hello(@PathVariable("name") String name) {
+
+        ModelAndView model = new ModelAndView();
+        model.setViewName("welcome");
+        model.addObject("message", name);
+
+        return model;
+
+    }*/
+
+    @GetMapping("/hello/{name:.+}")
+    public String hello(Model model, @PathVariable("name") String name) {
+
+        model.addAttribute("message", name);
+
+        // view name
+        return "welcome";
+    }
+
+
+}
