@@ -18,8 +18,8 @@ public class PathVariableController {
     }
 
     @GetMapping("/api/title/{title}")
-    public String getPageByName(@PathVariable("title") String title) {
-        return title;
+    public String getPageByName(@PathVariable("title") String name) {
+        return name;
     }
 
     @GetMapping("/api/multi/{tag}/{name}")
@@ -41,18 +41,11 @@ public class PathVariableController {
     // From docs.spring.io, modify to support version double digits and .RELEASE as optional
     // spring-webmvc-5.3.22.jar, spring-webmvc-5.2.22.RELEASE.jar
     @GetMapping("/api/get/{name:[a-z-]+}-{version:\\d{1,2}\\.\\d{1,2}\\.\\d{1,2}(?:\\.RELEASE)?}{ext:\\.[a-z]+}")
-    public String getJarFile(@PathVariable String name, @PathVariable String version, @PathVariable String ext) {
+    public String getJarFile(@PathVariable String name,
+                             @PathVariable String version,
+                             @PathVariable String ext) {
         return name + "-" + version + ext;
     }
-
-    /*@GetMapping("/hello/{name:.+}")
-    public String hello(Model model, @PathVariable("name") String name) {
-
-        model.addAttribute("message", name);
-
-        // view name, map to welcome.html later
-        return "welcome";
-    }*/
 
     @GetMapping(value = {"/api2/page/", "/api2/page/{id}"})
     public String getPageByApi2(@PathVariable String id) {
@@ -71,7 +64,7 @@ public class PathVariableController {
     }
 
     @GetMapping(value = {"/api4/page/", "/api4/page/{id}"})
-    public String getPageByApi4(@PathVariable(required = false) Optional<String> id) {
+    public String getPageByApi4(@PathVariable Optional<String> id) {
 
         if (id.isPresent()) {
             return id.get();
@@ -82,6 +75,16 @@ public class PathVariableController {
         // or one line
         // return id.orElse("id is required!");
 
+    }
+
+    // value after the last dot get truncated, try regex
+    /*@GetMapping("/hello/{name}")
+    public String whereIsDot(@PathVariable("name") String name) {
+        return name;
+    }*/
+    @GetMapping("/hello/{name:.+}")
+    public String whereIsDotFixed(@PathVariable("name") String name) {
+        return name;
     }
 
 }

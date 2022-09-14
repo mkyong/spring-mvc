@@ -69,7 +69,7 @@ public class PathVariableControllerTests {
     public void getPageByTagAndNameMapVersion() throws Exception {
 
         MvcResult result = this.mockMvc.perform(get("/path/api/multi/spring-mvc/and/hello-world"))
-                .andDo(print())
+                /*.andDo(print())*/
                 .andExpect(status().isOk())
                 .andExpect(content().string("spring-mvc:hello-world"))
                 .andReturn();
@@ -94,6 +94,20 @@ public class PathVariableControllerTests {
                 .andExpect(content().string(jar2))
                 .andReturn();
 
+
+    }
+
+    @Test
+    public void getPageByApi2() throws Exception {
+
+        this.mockMvc.perform(get("/path/api2/page/"))
+                .andExpect(status().is5xxServerError())
+                .andReturn();
+
+        this.mockMvc.perform(get("/path/api2/page/1"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("1"))
+                .andReturn();
 
     }
 
@@ -129,7 +143,18 @@ public class PathVariableControllerTests {
     }
 
     @Test
-    public void getPagePath2() throws Exception {
+    public void whereIsDot() throws Exception {
+
+        this.mockMvc.perform(get("/path/hello/hello.jar"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string("hello.jar"))
+                .andReturn();
+
+    }
+
+    @Test
+    public void getPageUsingClassAndMethod() throws Exception {
 
         this.mockMvc.perform(get("/path2/api/99/page/hello-world/"))
                 /*.andDo(print())*/
