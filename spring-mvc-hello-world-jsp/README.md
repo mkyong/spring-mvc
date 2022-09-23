@@ -17,6 +17,7 @@ _P.S This tutorial is NOT a Spring Boot application, just pure Spring Web MVC!_
 * Gradle Gretty plugin 3.0.9 for embedded servlet containers (Tomcat 9 and Jetty 9.4)
 * Spring Test 5.2.22.RELEASE
 * Hamcrest 2.2
+* JUnit 5.9 
 
 ## 2. How to run this project?
 ```shell
