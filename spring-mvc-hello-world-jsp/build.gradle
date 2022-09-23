@@ -19,6 +19,8 @@ dependencies {
 	implementation 'org.springframework:spring-webmvc:5.2.22.RELEASE'
 	implementation 'org.webjars:bootstrap:5.2.0'
 	testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
+	testImplementation 'org.springframework:spring-test:5.2.22.RELEASE'
+	testImplementation 'org.hamcrest:hamcrest-core:2.2'
 }
 
 gretty {

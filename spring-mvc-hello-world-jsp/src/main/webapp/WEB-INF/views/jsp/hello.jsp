@@ -21,12 +21,12 @@
   <div class="starter-template">
       <h1>Spring Web MVC JSP Example</h1>
       <h2>
-            <c:if test="${not empty name}">
-                Hello ${name}
+            <c:if test="${not empty message}">
+                Hello ${message}
             </c:if>
 
-            <c:if test="${empty name}">
-                Welcome Welcome!
+            <c:if test="${empty message}">
+                Welcome!
             </c:if>
       </h2>
   </div>
