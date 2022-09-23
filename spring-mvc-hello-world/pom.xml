@@ -10,11 +10,12 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jdk.version>11</jdk.version>
-        <spring.mvc.version>5.2.22.RELEASE</spring.mvc.version>
+        <spring.version>5.2.22.RELEASE</spring.version>
         <servletapi.version>4.0.4</servletapi.version>
         <thymeleaf.spring.version>3.0.15.RELEASE</thymeleaf.spring.version>
         <webjars.version>5.2.0</webjars.version>
-
+        <hamcrest.version>2.2</hamcrest.version>
+        <junit.version>5.9.0</junit.version>
     </properties>
 
     <dependencies>
@@ -22,7 +23,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-            <version>${spring.mvc.version}</version>
+            <version>${spring.version}</version>
         </dependency>
 
         <dependency>
@@ -42,6 +43,27 @@
             <artifactId>jakarta.servlet-api</artifactId>
             <version>${servletapi.version}</version>
             <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-core</artifactId>
+            <version>${hamcrest.version}</version>
+            <scope>test</scope>
         </dependency>
 
         <!-- compile only, deployed container will provide this -->
