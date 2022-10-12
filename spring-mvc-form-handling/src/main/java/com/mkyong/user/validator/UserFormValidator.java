@@ -8,13 +8,19 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
+/*
+    https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#validator
+ */
 @Component
 public class UserFormValidator implements Validator {
 
     @Autowired
     @Qualifier("emailValidator")
-    EmailValidator emailValidator;
+    private EmailValidator emailValidator;
 
+    /**
+     * This Validator validates only User instances
+     */
     @Override
     public boolean supports(Class<?> clazz) {
         return User.class.equals(clazz);
@@ -26,26 +32,30 @@ public class UserFormValidator implements Validator {
         User user = (User) target;
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "NotEmpty.userForm.name");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "NotEmpty.userForm.email");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "address", "NotEmpty.userForm.address");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty.userForm.password");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "confirmPassword","NotEmpty.userForm.confirmPassword");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "sex", "NotEmpty.userForm.sex");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "country", "NotEmpty.userForm.country");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "acceptTOS", "NotEmpty.userForm.acceptTOS");
+
+        if(!user.isAcceptTOS()){
+            errors.rejectValue("acceptTOS", "NotEmpty.userForm.acceptTOS");
+        }
 
         if(!emailValidator.valid(user.getEmail())){
-            errors.rejectValue("email", "Pattern.userForm.email");
+            errors.rejectValue("email", "NotEmpty.userForm.email");
         }
 
         if(user.getNumber()==null || user.getNumber()<=0){
             errors.rejectValue("number", "NotEmpty.userForm.number");
         }
 
-        if(user.getCountry().equalsIgnoreCase("none")){
+        if(user.getCountry() == null || user.getCountry().equalsIgnoreCase("none")){
             errors.rejectValue("country", "NotEmpty.userForm.country");
         }
 
-        if (!user.getPassword().equals(user.getConfirmPassword())) {
+        if (user.getPassword() == null || !user.getPassword().equals(user.getConfirmPassword())) {
             errors.rejectValue("confirmPassword", "Diff.userform.confirmPassword");
         }
 

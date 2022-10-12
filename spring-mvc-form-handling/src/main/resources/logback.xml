@@ -15,7 +15,7 @@
 		<appender-ref ref="STDOUT" />
 	</logger>
 	
-	<logger name="com.mkyong.form" level="debug" additivity="false">
+	<logger name="com.mkyong" level="debug" additivity="false">
 		<appender-ref ref="STDOUT" />
 	</logger>
 	

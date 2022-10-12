@@ -30,7 +30,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User findById(Integer id) {
 
-        Map<String, Object> params = new HashMap<String, Object>();
+        Map<String, Object> params = new HashMap<>();
         params.put("id", id);
 
         String sql = "SELECT * FROM users WHERE id=:id";
@@ -96,7 +96,7 @@ public class UserDaoImpl implements UserDao {
         paramSource.addValue("email", user.getEmail());
         paramSource.addValue("address", user.getAddress());
         paramSource.addValue("password", user.getPassword());
-        paramSource.addValue("newsletter", user.isNewsletter());
+        paramSource.addValue("newsletter", user.isAcceptTOS());
 
         // join String
         paramSource.addValue("framework", convertListToDelimitedString(user.getFramework()));
@@ -118,7 +118,7 @@ public class UserDaoImpl implements UserDao {
             user.setFramework(convertDelimitedStringToList(rs.getString("framework")));
             user.setAddress(rs.getString("address"));
             user.setCountry(rs.getString("country"));
-            user.setNewsletter(rs.getBoolean("newsletter"));
+            user.setAcceptTOS(rs.getBoolean("newsletter"));
             user.setNumber(rs.getInt("number"));
             user.setPassword(rs.getString("password"));
             user.setSex(rs.getString("sex"));

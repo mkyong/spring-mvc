@@ -26,7 +26,7 @@ public class User {
     String confirmPassword;
 
     // form:checkbox - single checkbox
-    boolean newsletter;
+    boolean acceptTOS;
 
     // form:checkboxes - multiple checkboxes
     List<String> framework;
@@ -96,12 +96,12 @@ public class User {
         this.confirmPassword = confirmPassword;
     }
 
-    public boolean isNewsletter() {
-        return newsletter;
+    public boolean isAcceptTOS() {
+        return acceptTOS;
     }
 
-    public void setNewsletter(boolean newsletter) {
-        this.newsletter = newsletter;
+    public void setAcceptTOS(boolean acceptTOS) {
+        this.acceptTOS = acceptTOS;
     }
 
     public List<String> getFramework() {
@@ -142,5 +142,23 @@ public class User {
 
     public void setSkill(List<String> skill) {
         this.skill = skill;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", address='" + address + '\'' +
+                ", password='" + password + '\'' +
+                ", confirmPassword='" + confirmPassword + '\'' +
+                ", acceptTOS=" + acceptTOS +
+                ", framework=" + framework +
+                ", sex='" + sex + '\'' +
+                ", number=" + number +
+                ", country='" + country + '\'' +
+                ", skill=" + skill +
+                '}';
     }
 }

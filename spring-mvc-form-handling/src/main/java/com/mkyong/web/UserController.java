@@ -9,11 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.util.*;
 
 @Controller
@@ -27,7 +27,7 @@ public class UserController {
     @Autowired
     private UserFormValidator formValidator;
 
-    //Set a form validator, still need this?
+    // register the validator locally
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
         binder.setValidator(formValidator);
@@ -47,18 +47,19 @@ public class UserController {
 
     }
 
+    // @Valid vs @Validate?
     // save or update user
     // 1. @ModelAttribute bind form value
     // 2. @Validated form validator
     // 3. RedirectAttributes for flash value
     @PostMapping("/users")
-    public String saveOrUpdateUser(@ModelAttribute("userForm") @Validated User user,
-                                   BindingResult result, Model model,
+    public String saveOrUpdateUser(@ModelAttribute("userForm") @Valid User user,
+                                   BindingResult bindingResult, Model model,
                                    final RedirectAttributes redirectAttributes) {
 
         logger.debug("saveOrUpdateUser() : {}", user);
 
-        if (result.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             /*populateDefaultModel(model);*/
             return "userform";
         } else {
@@ -74,7 +75,7 @@ public class UserController {
             userService.saveOrUpdate(user);
 
             // POST/REDIRECT/GET
-            return "redirect:/" + user.getId();
+            return "redirect:/user" + user.getId();
 
             // POST/FORWARD/GET
             // return "user/list";
@@ -95,7 +96,7 @@ public class UserController {
         user.setName("mkyong123");
         user.setEmail("test@gmail.com");
         user.setAddress("abc 88");
-        user.setNewsletter(true);
+        user.setAcceptTOS(true);
         user.setSex("M");
         user.setFramework(new ArrayList<String>(Arrays.asList("Spring MVC", "GWT")));
         user.setSkill(new ArrayList<String>(Arrays.asList("Spring", "Grails", "Groovy")));

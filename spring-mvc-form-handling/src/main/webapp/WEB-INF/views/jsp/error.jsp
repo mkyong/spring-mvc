@@ -4,21 +4,17 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
 <jsp:include page="fragments/header.jsp" />
-
 <body>
 
 	<div class="container">
 
-		<h1>Error Page</h1>
-
-		<p>${exception.message}</p>
-		<!-- Exception: ${exception.message}.
+		<code>
+		    <h2>Exception: ${exception.message}.</h2>
 		  	<c:forEach items="${exception.stackTrace}" var="stackTrace"> 
 				${stackTrace} 
 			</c:forEach>
-	  	-->
+	  	</code>
 
 	</div>
 

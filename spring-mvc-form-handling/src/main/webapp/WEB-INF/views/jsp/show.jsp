@@ -22,57 +22,76 @@
 	</c:if>
 
 	<h1>User Detail</h1>
-	<br />
 
-	<div class="row">
-		<label class="col-sm-2">ID</label>
-		<div class="col-sm-10">${user.id}</div>
-	</div>
+    <div class="row">
+        <label for="staticID" class="col-sm-2 col-form-label">ID</label>
+        <div class="col-sm-10">
+          <input type="text" readonly class="form-control-plaintext" id="staticID" value="${user.id}">
+        </div>
+    </div>
 
-	<div class="row">
-		<label class="col-sm-2">Name</label>
-		<div class="col-sm-10">${user.name}</div>
-	</div>
+    <div class="row">
+        <label for="staticName" class="col-sm-2 col-form-label">Name</label>
+        <div class="col-sm-10">
+          <input type="text" readonly class="form-control-plaintext" id="staticName" value="${user.name}">
+        </div>
+    </div>
 
-	<div class="row">
-		<label class="col-sm-2">Email</label>
-		<div class="col-sm-10">${user.email}</div>
-	</div>
+    <div class="row">
+        <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
+        <div class="col-sm-10">
+          <input type="text" readonly class="form-control-plaintext" id="staticName" value="${user.email}">
+        </div>
+    </div>
 
-	<div class="row">
-		<label class="col-sm-2">Address</label>
-		<div class="col-sm-10">${user.address}</div>
-	</div>
+    <div class="row">
+        <label for="staticAddress" class="col-sm-2 col-form-label">Address</label>
+        <div class="col-sm-10">
+          <input type="text" readonly class="form-control-plaintext" id="staticAddress" value="${user.address}">
+        </div>
+    </div>
 
-	<div class="row">
-		<label class="col-sm-2">Newsletter</label>
-		<div class="col-sm-10">${user.newsletter}</div>
-	</div>
+    <div class="row">
+        <label for="staticNewsletter" class="col-sm-2 col-form-label">Newsletter</label>
+        <div class="col-sm-10">
+          <input type="text" readonly class="form-control-plaintext" id="staticNewsletter" value="${user.newsletter}">
+        </div>
+    </div>
 
-	<div class="row">
-		<label class="col-sm-2">Web Frameworks</label>
-		<div class="col-sm-10">${user.framework}</div>
-	</div>
+    <div class="row">
+        <label for="staticFramework" class="col-sm-2 col-form-label">Web Frameworks</label>
+        <div class="col-sm-10">
+          <input type="text" readonly class="form-control-plaintext" id="staticFramework" value="${user.framework}">
+        </div>
+    </div>
 
-	<div class="row">
-		<label class="col-sm-2">Sex</label>
-		<div class="col-sm-10">${user.sex}</div>
-	</div>
+    <div class="row">
+        <label for="staticSex" class="col-sm-2 col-form-label">Sex</label>
+        <div class="col-sm-10">
+          <input type="text" readonly class="form-control-plaintext" id="staticSex" value="${user.sex}">
+        </div>
+    </div>
 
-	<div class="row">
-		<label class="col-sm-2">Number</label>
-		<div class="col-sm-10">${user.number}</div>
-	</div>
+    <div class="row">
+        <label for="staticNumber" class="col-sm-2 col-form-label">Number</label>
+        <div class="col-sm-10">
+          <input type="text" readonly class="form-control-plaintext" id="staticNumber" value="${user.number}">
+        </div>
+    </div>
 
-	<div class="row">
-		<label class="col-sm-2">Country</label>
-		<div class="col-sm-10">${user.country}</div>
-	</div>
+    <div class="row">
+        <label for="staticCountry" class="col-sm-2 col-form-label">Country</label>
+        <div class="col-sm-10">
+          <input type="text" readonly class="form-control-plaintext" id="staticCountry" value="${user.country}">
+        </div>
+    </div>
 
-	<div class="row">
-		<label class="col-sm-2">Skill</label>
-		<div class="col-sm-10">${user.skill}</div>
-	</div>
+    <div class="row">
+        <label for="staticSkill" class="col-sm-2 col-form-label">Skill</label>
+        <div class="col-sm-10">
+          <input type="text" readonly class="form-control-plaintext" id="staticSkill" value="${user.skill}">
+        </div>
+    </div>
 
 </div>
 
