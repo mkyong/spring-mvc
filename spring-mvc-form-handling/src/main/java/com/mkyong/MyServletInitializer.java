@@ -10,7 +10,7 @@ public class MyServletInitializer
     // services and data sources
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[]{SpringCoreConfig.class/*, SpringDatabaseConfig.class*/};
+        return new Class[]{SpringCoreConfig.class};
     }
 
     // controller, view resolver, handler mapping

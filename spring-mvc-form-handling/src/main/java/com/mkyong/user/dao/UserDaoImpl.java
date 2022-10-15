@@ -129,7 +129,7 @@ public class UserDaoImpl implements UserDao {
 
     private static List<String> convertDelimitedStringToList(String delimitedString) {
 
-        List<String> result = new ArrayList<String>();
+        List<String> result = new ArrayList<>();
 
         if (!StringUtils.isEmpty(delimitedString)) {
             result = Arrays.asList(StringUtils.delimitedListToStringArray(delimitedString, ","));

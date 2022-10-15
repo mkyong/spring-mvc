@@ -9,3 +9,15 @@ h1{
 h2{
 	color:#FF0000;
 }
+
+/** multiple checkboxes **/
+.invalid-feedback-force-display {
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: .875em;
+    color: #dc3545;
+}
+
+.form-check-input.is-invalid~label {
+    color: #dc3545;
+}

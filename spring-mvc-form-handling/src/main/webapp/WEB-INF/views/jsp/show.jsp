@@ -12,12 +12,9 @@
 <div class="container">
 
 	<c:if test="${not empty msg}">
-		<div class="alert alert-${css} alert-dismissible" role="alert">
-			<button type="button" class="close" data-dismiss="alert"
-                                aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
-			<strong>${msg}</strong>
+		<div class="alert alert-${alert-mode} alert-dismissible fade show" role="alert">
+			${msg}
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 		</div>
 	</c:if>
 
@@ -48,13 +45,6 @@
         <label for="staticAddress" class="col-sm-2 col-form-label">Address</label>
         <div class="col-sm-10">
           <input type="text" readonly class="form-control-plaintext" id="staticAddress" value="${user.address}">
-        </div>
-    </div>
-
-    <div class="row">
-        <label for="staticNewsletter" class="col-sm-2 col-form-label">Newsletter</label>
-        <div class="col-sm-10">
-          <input type="text" readonly class="form-control-plaintext" id="staticNewsletter" value="${user.newsletter}">
         </div>
     </div>
 
@@ -91,6 +81,10 @@
         <div class="col-sm-10">
           <input type="text" readonly class="form-control-plaintext" id="staticSkill" value="${user.skill}">
         </div>
+    </div>
+
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <a class="btn btn-primary" href="/" role="button">Back To Home</a>
     </div>
 
 </div>

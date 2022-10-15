@@ -1,5 +1,6 @@
 package com.mkyong.web;
 
+import com.mkyong.user.DataUtils;
 import com.mkyong.user.model.User;
 import com.mkyong.user.service.UserService;
 import com.mkyong.user.validator.UserFormValidator;
@@ -14,7 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 @Controller
 public class UserController {
@@ -27,27 +29,21 @@ public class UserController {
     @Autowired
     private UserFormValidator formValidator;
 
-    // register the validator locally
+    // register the form validator to this controller
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
         binder.setValidator(formValidator);
     }
 
-    @GetMapping("/")
-    public String defaultPage() {
-        logger.debug("defaultPage()...");
-        return "redirect:/users";
-    }
-
-    @GetMapping("/users")
-    public String listUsers(Model model) {
+    @GetMapping(value = {"/", "/users"})
+    public String listAllUsers(Model model) {
         logger.debug("listUsers()...");
         model.addAttribute("users", userService.findAll());
         return "list";
 
     }
 
-    // @Valid vs @Validate?
+    // @Valid jsr 303 vs @Validate for spring ?
     // save or update user
     // 1. @ModelAttribute bind form value
     // 2. @Validated form validator
@@ -60,12 +56,12 @@ public class UserController {
         logger.debug("saveOrUpdateUser() : {}", user);
 
         if (bindingResult.hasErrors()) {
-            /*populateDefaultModel(model);*/
+            populateDefaultCheckBoxesAndRadios(model);    //repopulate for items like checkboxes, radios and etc
             return "userform";
         } else {
 
             // Add message to flash scope
-            redirectAttributes.addFlashAttribute("css", "success");
+            redirectAttributes.addFlashAttribute("alert-mode", "success");
             if (user.isNew()) {
                 redirectAttributes.addFlashAttribute("msg", "User added successfully!");
             } else {
@@ -75,12 +71,29 @@ public class UserController {
             userService.saveOrUpdate(user);
 
             // POST/REDIRECT/GET
-            return "redirect:/user" + user.getId();
+            return "redirect:/users/" + user.getId();
 
             // POST/FORWARD/GET
             // return "user/list";
 
         }
+
+    }
+
+    // show user
+    @GetMapping("/users/{id}")
+    public String showUser(@PathVariable("id") int userId, Model model) {
+
+        logger.debug("showUser() userId: {}", userId);
+
+        User user = userService.findById(userId);
+        if (user == null) {
+            model.addAttribute("alert-mode", "danger");
+            model.addAttribute("msg", "User not found!");
+        }
+        model.addAttribute("user", user);
+
+        return "show";
 
     }
 
@@ -90,21 +103,15 @@ public class UserController {
 
         logger.debug("showAddUserForm()");
 
+        // init values for user form
         User user = new User();
-
-        // set default value
-        user.setName("mkyong123");
-        user.setEmail("test@gmail.com");
-        user.setAddress("abc 88");
-        user.setAcceptTOS(true);
         user.setSex("M");
-        user.setFramework(new ArrayList<String>(Arrays.asList("Spring MVC", "GWT")));
-        user.setSkill(new ArrayList<String>(Arrays.asList("Spring", "Grails", "Groovy")));
-        user.setCountry("SG");
-        user.setNumber(2);
+        user.setCountry("MY");
+        user.setFramework(new ArrayList<String>(Arrays.asList("Spring", "Struts")));
+        user.setSkill(new ArrayList<String>(Arrays.asList("Spring", "Struts", "Hibernate")));
         model.addAttribute("userForm", user);
 
-        populateDefaultModel(model);
+        populateDefaultCheckBoxesAndRadios(model);
 
         return "userform";
 
@@ -116,17 +123,15 @@ public class UserController {
 
         logger.debug("showUpdateUserForm() : {}", id);
 
-        User user = userService.findById(id);
-        model.addAttribute("userForm", user);
+        model.addAttribute("userForm", userService.findById(id));
 
-        populateDefaultModel(model);
+        populateDefaultCheckBoxesAndRadios(model);
 
         return "userform";
 
     }
 
-    // delete user
-    @RequestMapping(value = "/users/{id}/delete", method = RequestMethod.POST)
+    @PostMapping("/users/{id}/delete")
     public String deleteUser(@PathVariable("id") int id,
                              final RedirectAttributes redirectAttributes) {
 
@@ -134,64 +139,18 @@ public class UserController {
 
         userService.delete(id);
 
-        redirectAttributes.addFlashAttribute("css", "success");
+        redirectAttributes.addFlashAttribute("alert-mode", "success");
         redirectAttributes.addFlashAttribute("msg", "User is deleted!");
 
         return "redirect:/";
 
     }
 
-    // show user
-    @RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
-    public String showUser(@PathVariable("id") int id, Model model) {
-
-        logger.debug("showUser() id: {}", id);
-
-        User user = userService.findById(id);
-        if (user == null) {
-            model.addAttribute("css", "danger");
-            model.addAttribute("msg", "User not found");
-        }
-        model.addAttribute("user", user);
-
-        return "show";
-
-    }
-
-    private void populateDefaultModel(Model model) {
-
-        List<String> frameworksList = new ArrayList<>();
-        frameworksList.add("Spring MVC");
-        frameworksList.add("Struts 2");
-        frameworksList.add("JSF 2");
-        frameworksList.add("GWT");
-        frameworksList.add("Play");
-        frameworksList.add("Apache Wicket");
-        model.addAttribute("frameworkList", frameworksList);
-
-        Map<String, String> skill = new LinkedHashMap<>();
-        skill.put("Hibernate", "Hibernate");
-        skill.put("Spring", "Spring");
-        skill.put("Struts", "Struts");
-        skill.put("Groovy", "Groovy");
-        skill.put("Grails", "Grails");
-        model.addAttribute("javaSkillList", skill);
-
-        List<Integer> numbers = new ArrayList<>();
-        numbers.add(1);
-        numbers.add(2);
-        numbers.add(3);
-        numbers.add(4);
-        numbers.add(5);
-        model.addAttribute("numberList", numbers);
-
-        Map<String, String> country = new LinkedHashMap<>();
-        country.put("US", "United Stated");
-        country.put("CN", "China");
-        country.put("SG", "Singapore");
-        country.put("MY", "Malaysia");
-        model.addAttribute("countryList", country);
-
+    private void populateDefaultCheckBoxesAndRadios(Model model) {
+        model.addAttribute("frameworkList", DataUtils.FRAMEWORKS_LIST);
+        model.addAttribute("javaSkillList", DataUtils.SKILLS);
+        model.addAttribute("numberList", DataUtils.NUMBERS);
+        model.addAttribute("countryList", DataUtils.COUNTRY);
     }
 
 }

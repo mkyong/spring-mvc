@@ -58,6 +58,10 @@
 			</c:forEach>
 		</table>
 
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <a class="btn btn-primary" href="/users/add" role="button">Add User</a>
+		</div>
+
 	</div>
 
 	<jsp:include page="fragments/footer.jsp" />
