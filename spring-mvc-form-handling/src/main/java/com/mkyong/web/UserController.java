@@ -10,11 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -32,7 +32,11 @@ public class UserController {
     // register the form validator to this controller
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
-        binder.setValidator(formValidator);
+        // this will override the jsr303 validator
+        //binder.setValidator(formValidator);
+
+        // this support both spring validator and jsr303 validator
+        binder.addValidators(formValidator);
     }
 
     @GetMapping(value = {"/", "/users"})
@@ -43,15 +47,18 @@ public class UserController {
 
     }
 
-    // @Valid jsr 303 vs @Validate for spring ?
+    // @Valid from jsr 303 and @Validate from the Spring.
     // save or update user
     // 1. @ModelAttribute bind form value
-    // 2. @Validated form validator
+    // 2. @Valid form validator
     // 3. RedirectAttributes for flash value
     @PostMapping("/users")
-    public String saveOrUpdateUser(@ModelAttribute("userForm") @Valid User user,
+    public String saveOrUpdateUser(@ModelAttribute("userForm") @Validated User user,
                                    BindingResult bindingResult, Model model,
                                    final RedirectAttributes redirectAttributes) {
+
+        // @InitBinder or run the form validator manually like this
+        // formValidator.validate(user, bindingResult);
 
         logger.debug("saveOrUpdateUser() : {}", user);
 
@@ -61,7 +68,7 @@ public class UserController {
         } else {
 
             // Add message to flash scope
-            redirectAttributes.addFlashAttribute("alert-mode", "success");
+            redirectAttributes.addFlashAttribute("alert", "success");
             if (user.isNew()) {
                 redirectAttributes.addFlashAttribute("msg", "User added successfully!");
             } else {
@@ -88,7 +95,7 @@ public class UserController {
 
         User user = userService.findById(userId);
         if (user == null) {
-            model.addAttribute("alert-mode", "danger");
+            model.addAttribute("alert", "danger");
             model.addAttribute("msg", "User not found!");
         }
         model.addAttribute("user", user);
@@ -139,7 +146,7 @@ public class UserController {
 
         userService.delete(id);
 
-        redirectAttributes.addFlashAttribute("alert-mode", "success");
+        redirectAttributes.addFlashAttribute("alert", "success");
         redirectAttributes.addFlashAttribute("msg", "User is deleted!");
 
         return "redirect:/";

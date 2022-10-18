@@ -1,6 +1,6 @@
 package com.mkyong.user.model;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.List;
 
@@ -8,9 +8,10 @@ public class User {
     // form:hidden - hidden value
     Integer id;
 
+    // JSR 303 validation
     // form:input - textbox
-    @NotNull
-    @Size(min=2, max=30)
+    @NotEmpty
+    @Size(min=2, max=30, message = "name must be between 2 and 30 characters")
     String name;
 
     // form:input - textbox

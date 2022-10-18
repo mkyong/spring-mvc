@@ -12,15 +12,12 @@
 
 	<div class="container">
 
-		<c:if test="${not empty msg}">
-		    <div class="alert alert-${css} alert-dismissible" role="alert">
-			<button type="button" class="close" data-dismiss="alert"
-                                aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
-			<strong>${msg}</strong>
-		    </div>
-		</c:if>
+        <c:if test="${not empty msg}">
+            <div class="alert alert-${alert} alert-dismissible fade show" role="alert">
+                ${msg}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </c:if>
 
 		<h1>All Users</h1>
 
